@@ -11,7 +11,6 @@ class LoginPage(BasePage):
     # Login
 
     CUSTOMER_LOGIN = (By.XPATH, '//div[@class="borderM box padT20"]//div[1]//button')
-    BANK_MANAGER_LOGIN = (By.XPATH, '//div[@class="borderM box padT20"]//div[2]//button')
     LOGOUT = (By.CSS_SELECTOR, 'button[class="btn logout"]')
 
     # Customers
