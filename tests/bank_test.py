@@ -1,6 +1,9 @@
 import time
+
+from pages.account_services_page import AccountServicesPage
 from pages.customer_page import LoginPage
 from pages.manager_page import ManagerPage
+from pages.register_page import RegisterPage
 
 
 class TestBank:
@@ -53,8 +56,27 @@ class TestBank:
             time.sleep(5)
             assert alert_info == 'Account created successfully with account Number :1016'
 
+        def test_register_new_user(self, driver):
+            register_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/register.htm')
+            register_page.open()
+            user_name, welcome_massage = register_page.register_new_user()
+            time.sleep(5)
+            assert welcome_massage == f'Welcome {user_name}'
 
+        def test_login(self, driver):
+            register_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC')
+            register_page.open()
+            text = register_page.log_in_user()
+            assert text == 'Accounts Overview'
 
+        def test_open_new_account(self, driver):
+            register_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC')
+            register_page.open()
+            register_page.log_in_user()
+            services_page = AccountServicesPage(driver, 'https://parabank.parasoft.com/parabank/openaccount.htm')
+            success_massage = services_page.open_new_account()
+            time.sleep(3)
+            assert success_massage == 'Congratulations, your account is now open.'
 
 
 
