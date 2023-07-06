@@ -1,6 +1,6 @@
 from faker import Faker
 
-from data.data import Customer, User
+from data.data import Customer, User, Date
 
 faker_en = Faker('en')
 Faker.seed()
@@ -26,5 +26,14 @@ def generated_user():
         ssn=faker_en.ssn(),
         user_name=faker_en.user_name(),
         password=faker_en.password()
+
+    )
+
+
+def generated_date():
+    yield Date(
+        day=faker_en.day_of_month(),
+        month=faker_en.month(),
+        year=faker_en.year()
 
     )

@@ -53,11 +53,13 @@ class RegisterPage(BasePage):
         self.element_is_visible(self.CONFIRM).send_keys(password)
         self.element_is_visible(self.SUBMIT_BUTTON).click()
         welcome_massage = self.element_is_visible(self.WELCOME_MASSAGE).text
+        print(user_name)
+        print(password)
         return user_name, welcome_massage
 
     def log_in_user(self):
-        self.element_is_visible(self.USER_NAME_INPUT).send_keys('user')
-        self.element_is_visible(self.PASSWORD_INPUT).send_keys('pass')
+        self.element_is_visible(self.USER_NAME_INPUT).send_keys('donaldnelson')
+        self.element_is_visible(self.PASSWORD_INPUT).send_keys('3_8sMu051u')
         self.element_is_visible(self.SUBMIT).click()
         text = self.element_is_visible(self.SUCCESS_MASSAGE).text
         return text

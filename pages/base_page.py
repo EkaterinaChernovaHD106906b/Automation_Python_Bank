@@ -1,5 +1,7 @@
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
+
 
 class BasePage:
     def __init__(self, driver, url):
@@ -27,7 +29,14 @@ class BasePage:
     def element_is_clickable(self, locator, timeout=5):
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
+    def move_to_element(self, element):
+        action = ActionChains(self.driver)
+        action.move_to_element(element)
+        action.perform()
 
+    def scroll_by(self, scroll_value):
+        scroll_by = f'window.scrollBy(0, {scroll_value});'
+        self.driver.execute_script(scroll_by)
 
 
 

@@ -2,6 +2,7 @@ import time
 
 from pages.account_services_page import AccountServicesPage
 from pages.customer_page import LoginPage
+from pages.find_transaction_page import FindTransactionPage
 from pages.manager_page import ManagerPage
 from pages.register_page import RegisterPage
 
@@ -77,6 +78,48 @@ class TestBank:
             success_massage = services_page.open_new_account()
             time.sleep(3)
             assert success_massage == 'Congratulations, your account is now open.'
+
+        def test_find_transaction_page(self, driver):
+            login_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC')
+            login_page.open()
+            login_page.log_in_user()
+            find_transaction_page = FindTransactionPage(driver, 'https://parabank.parasoft.com/parabank/overview.htm')
+            result = find_transaction_page.find_transaction_by_amount()
+            assert result == 'Transaction Results'
+
+        def test_find_transaction_by_date(self, driver):
+            login_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC')
+            login_page.open()
+            login_page.log_in_user()
+            find_transaction_page = FindTransactionPage(driver, 'https://parabank.parasoft.com/parabank/overview.htm')
+            result = find_transaction_page.find_transaction_by_date()
+            assert result == 'Transaction Results'
+
+        def test_find_transaction_by_date_range(self, driver):
+            login_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC')
+            login_page.open()
+            login_page.log_in_user()
+            find_transaction_page = FindTransactionPage(driver, 'https://parabank.parasoft.com/parabank/overview.htm')
+            result = find_transaction_page.find_transaction_by_date_range()
+            assert result == 'Transaction Results'
+
+        def test_find_transaction_by_id(self, driver):
+            login_page = RegisterPage(driver, 'https://parabank.parasoft.com/parabank/index.htm?ConnType=JDBC')
+            login_page.open()
+            login_page.log_in_user()
+            find_transaction_page = FindTransactionPage(driver, 'https://parabank.parasoft.com/parabank/overview.htm')
+            amount = find_transaction_page.find_transaction_by_id()
+            time.sleep(5)
+            assert amount == '$100000.00'
+
+
+
+
+
+
+
+
+
 
 
 

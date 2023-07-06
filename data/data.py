@@ -20,3 +20,9 @@ class User:
     ssn: str = None
     user_name: str = None
     password: str = None
+
+@dataclass
+class Date:
+    day: str = None
+    month: str = None
+    year: str = None
