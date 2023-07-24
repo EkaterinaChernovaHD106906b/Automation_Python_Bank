@@ -42,6 +42,13 @@ class TestBSPBBank:
             result_table = accounts_page.get_excerpt()
             assert result_table == ['Дата', 'Плательщик / Получатель', 'Операция', 'Сумма (RUB)']
 
+        def test_order_a_card(self, driver):
+            login_page = LoginPage(driver, 'https://idemo.bspb.ru/')
+            login_page.open()
+            accounts_page = AccountsPage(driver, 'https://idemo.bspb.ru/statement')
+            login_page.login_user('demo', 'demo')
+            accounts_page.order_a_card()
+            time.sleep(5)
 
 
 

@@ -8,15 +8,26 @@ from pages.base_page import BasePage
 
 class AccountsPage(BasePage):
     ACCOUNTS = (By.CSS_SELECTOR, 'a#accounts-index')
+
+    # Excerpt
+
     EXCERPT = (By.CSS_SELECTOR, 'a#statements-statement')
     ICON_CALENDAR1 = (By.CSS_SELECTOR, 'div#from-date span.add-on i.icon-calendar')
-    LIST_OF_DAYS_FROM = (By.XPATH, '//div[@class=\'datepicker datepicker-dropdown dropdown-menu\'][1]//div[@class=\'datepicker-days\']//tbody//td[@class=\'day\']')
+    LIST_OF_DAYS_FROM = (By.XPATH,
+                         '//div[@class=\'datepicker datepicker-dropdown dropdown-menu\'][1]//div[@class=\'datepicker-days\']//tbody//td[@class=\'day\']')
     FROM = (By.CSS_SELECTOR, "input[name='from']")
     ICON_CALENDAR2 = (By.CSS_SELECTOR, 'div#until-date i.icon-calendar')
-    LIST_OF_DAYS_UNTIL = (By.XPATH, '//div[@class=\'datepicker datepicker-dropdown dropdown-menu\'][2]//div[@class=\'datepicker-days\']//tbody//td[@class=\'day\']')
+    LIST_OF_DAYS_UNTIL = (By.XPATH,
+                          '//div[@class=\'datepicker datepicker-dropdown dropdown-menu\'][2]//div[@class=\'datepicker-days\']//tbody//td[@class=\'day\']')
     UNTIL = (By.CSS_SELECTOR, 'input[name=\'until\']')
     QUERY_BUTTON = (By.CSS_SELECTOR, 'button#query-button')
     HEADERS = (By.CSS_SELECTOR, 'th.header')
+
+    # Current
+
+    CURRENT = (By.CSS_SELECTOR, 'li#accountIndex a#accounts-index')
+    SETTINGS = (By.XPATH, '//tbody[@id=\'accounts-list-body\']//tr[1]//div[@class=\'btn-group pull-right\']//button[@class=\'btn btn-mini dropdown-toggle\']')
+    ORDER_A_CARD = (By.XPATH, '//tbody[@id=\'accounts-list-body\']//tr[1]//ul[@class=\'dropdown-menu pull-right\']//li[1]//a')
 
     def get_excerpt(self):
         accounts = self.element_is_present(self.ACCOUNTS)
@@ -39,5 +50,9 @@ class AccountsPage(BasePage):
         print(f'Date from: {date_from}, date until: {date_until} ')
         return text_headers
 
-
-
+    def order_a_card(self):
+        accounts = self.element_is_present(self.ACCOUNTS)
+        self.move_to_element(accounts)
+        self.element_is_visible(self.CURRENT).click()
+        self.element_is_visible(self.SETTINGS).click()
+        self.element_is_present(self.ORDER_A_CARD).click()
