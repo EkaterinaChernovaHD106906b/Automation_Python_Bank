@@ -50,6 +50,16 @@ class TestBSPBBank:
             accounts_page.order_a_card()
             time.sleep(5)
 
+        def test_order_a_standard_card(self, driver):
+            login_page = LoginPage(driver, 'https://idemo.bspb.ru/')
+            login_page.open()
+            accounts_page = AccountsPage(driver, 'https://idemo.bspb.ru/statement')
+            login_page.login_user('demo', 'demo')
+            text = accounts_page.order_a_standard_card()
+            assert text == 'Спасибо, ваша заявка принята. В ближайшее время вам поступит sms-сообщение о готовности карты с указанием места ее получения.'
+
+
+
 
 
 

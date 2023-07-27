@@ -1,6 +1,5 @@
 import random
 import time
-
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -26,8 +25,27 @@ class AccountsPage(BasePage):
     # Current
 
     CURRENT = (By.CSS_SELECTOR, 'li#accountIndex a#accounts-index')
-    SETTINGS = (By.XPATH, '//tbody[@id=\'accounts-list-body\']//tr[1]//div[@class=\'btn-group pull-right\']//button[@class=\'btn btn-mini dropdown-toggle\']')
-    ORDER_A_CARD = (By.XPATH, '//tbody[@id=\'accounts-list-body\']//tr[1]//ul[@class=\'dropdown-menu pull-right\']//li[1]//a')
+    SETTINGS = (By.XPATH,
+                '//tbody[@id=\'accounts-list-body\']//tr[1]//div[@class=\'btn-group pull-right\']//button[@class=\'btn btn-mini dropdown-toggle\']')
+    ORDER_A_CARD = (
+        By.XPATH, '//tbody[@id=\'accounts-list-body\']//tr[1]//ul[@class=\'dropdown-menu pull-right\']//li[1]//a')
+    LIST_OF_CARDS = (By.CSS_SELECTOR, 'div#single-filters label')
+    BUTTONS = (By.CSS_SELECTOR,
+               "div[class='cards-group-selection-content span9'] div[class='bordered-card'] div[class='row-fluid row-fluid-wrappable'] button[class='btn btn-primary span5 btn-huge start-order-btn']")
+    HEADER = (By.CSS_SELECTOR, 'h2.application-title')
+    APPLICATION_TITLE = (By.CSS_SELECTOR, 'h2.application-title')
+
+    # Order a standard card
+
+    STANDARD_CARD_BUTTON = (By.CSS_SELECTOR, 'button[data-ref=\'871\']')
+    MODAL = (By.CSS_SELECTOR, 'div[class=\'card-application-modal modal\'] ')
+    CHECKBOX1 = (By.CSS_SELECTOR, 'input[name=\'cardOrder.activateSMSNotification\']')
+    CHECKBOX2 = (By.CSS_SELECTOR, 'input[name=\'cardOrder.activateInsurance\']')
+    ORDER_BUTTON = (By.CSS_SELECTOR, 'button#forward')
+    LIST_OF_OFFICES = (By.CSS_SELECTOR, 'select[name=\'cardOrder.branch\'] option')
+    CONFIRM_BUTTON = (By.CSS_SELECTOR, 'button#confirm')
+    IFRAME = (By.CSS_SELECTOR, 'iframe#confirmation-frame')
+    ALERT_SUCCESS = (By.CSS_SELECTOR, 'div[class =\'alert alert-success\']')
 
     def get_excerpt(self):
         accounts = self.element_is_present(self.ACCOUNTS)
@@ -56,3 +74,30 @@ class AccountsPage(BasePage):
         self.element_is_visible(self.CURRENT).click()
         self.element_is_visible(self.SETTINGS).click()
         self.element_is_present(self.ORDER_A_CARD).click()
+        self.elements_are_visible(self.LIST_OF_CARDS)
+        buttons_order_card = self.elements_are_visible(self.BUTTONS)
+        buttons_order_card[random.randint(0, 16)].click()
+
+    def order_a_standard_card(self):
+        accounts = self.element_is_present(self.ACCOUNTS)
+        self.move_to_element(accounts)
+        self.element_is_visible(self.CURRENT).click()
+        self.element_is_visible(self.SETTINGS).click()
+        self.element_is_present(self.ORDER_A_CARD).click()
+        self.element_is_visible(self.STANDARD_CARD_BUTTON).click()
+        self.element_is_visible(self.MODAL)
+        text = self.element_is_visible(self.HEADER).text
+        print(text)
+        list_of_offices = self.elements_are_presents(self.LIST_OF_OFFICES)
+        list_of_offices[random.randint(0, 16)].click()
+        self.element_is_visible(self.CHECKBOX1).click()
+        self.element_is_visible(self.CHECKBOX2).click()
+        self.element_is_visible(self.ORDER_BUTTON).click()
+        iframe = self.element_is_present(self.IFRAME)
+        self.driver.switch_to.frame(iframe)
+        self.element_is_visible(self.CONFIRM_BUTTON).click()
+        self.driver.switch_to.default_content()
+        text_success = self.element_is_visible(self.ALERT_SUCCESS).text
+        return text_success
+
+

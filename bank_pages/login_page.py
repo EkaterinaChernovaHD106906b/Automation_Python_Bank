@@ -1,5 +1,7 @@
 import time
 
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -29,6 +31,8 @@ class LoginPage(BasePage):
         input_code.clear()
         input_code.send_keys('0000')
         self.element_is_visible(self.BUTTON_CODE).click()
+        # alert = Alert(self.driver)  # if alert presents
+        # alert.accept()
         menu_text = self.element_is_visible(self.MENU).text
         return menu_text
 
@@ -36,8 +40,3 @@ class LoginPage(BasePage):
         self.element_is_visible(self.ACCESS_RECOVERY).click()
         text = self.element_is_visible(self.MODAL_TEXT).text
         return text
-
-
-
-
-
