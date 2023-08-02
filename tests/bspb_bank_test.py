@@ -58,9 +58,17 @@ class TestBSPBBank:
             text = accounts_page.order_a_standard_card()
             assert text == 'Спасибо, ваша заявка принята. В ближайшее время вам поступит sms-сообщение о готовности карты с указанием места ее получения.'
 
+        def test_read_messages(self, driver):
+            home_page = HomePage(driver, 'https://idemo.bspb.ru/welcome')
+            login_page = LoginPage(driver, 'https://idemo.bspb.ru/')
+            login_page.open()
+            login_page.login_user('demo', 'demo')
+            home_page.read_messages()
 
-
-
-
-
-
+        def test_save_new_message(self, driver):
+            home_page = HomePage(driver, 'https://idemo.bspb.ru/welcome')
+            login_page = LoginPage(driver, 'https://idemo.bspb.ru/')
+            login_page.open()
+            login_page.login_user('demo', 'demo')
+            alert_text = home_page.write_new_message()
+            assert alert_text == 'Сообщение успешно сохранено'

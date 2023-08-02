@@ -1,3 +1,5 @@
+import random
+
 from faker import Faker
 
 from data.data import Customer, User, Date
@@ -37,3 +39,10 @@ def generated_date():
         year=faker_en.year()
 
     )
+
+
+def generated_file():
+    path = rf'C:\Users\user\PycharmProjects\pythonProject3\test_file{random.randint(0, 100)}.txt'
+    with open(path, 'w') as file:
+        file.write('Hello, world')
+    return file.name, path
